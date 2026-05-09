@@ -12,9 +12,11 @@ interface Props {
 export default function EditUndanganForm({ undangan: u }: Props) {
   const [state, formAction, isPending] = useActionState(updateUndangan, null)
   const [removedFields, setRemovedFields] = useState<string[]>([])
+  const [galleryUrls, setGalleryUrls] = useState<string[]>(u.gallery_urls || [])
 
   const isRemoved = (field: string) => removedFields.includes(field)
   const handleRemove = (field: string) => setRemovedFields([...removedFields, field])
+  const handleRemoveGallery = (urlToRemove: string) => setGalleryUrls(galleryUrls.filter(url => url !== urlToRemove))
 
   useEffect(() => {
     if ((state as any)?.error) {
@@ -52,7 +54,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
       <input type="hidden" name="music_url" value={isRemoved('music_url') ? '' : (u.music_url || '')} />
       <input type="hidden" name="foto_mempelai_1_existing" value={isRemoved('foto_mempelai_1') ? '' : (u.foto_mempelai_1 || '')} />
       <input type="hidden" name="foto_mempelai_2_existing" value={isRemoved('foto_mempelai_2') ? '' : (u.foto_mempelai_2 || '')} />
-      <input type="hidden" name="gallery_urls_existing" value={(u.gallery_urls || []).join(',')} />
+      <input type="hidden" name="gallery_urls_existing" value={galleryUrls.join(',')} />
 
       {/* --- SECTION 1: IDENTITAS --- */}
       <section style={formSectionStyle}>
@@ -326,9 +328,10 @@ export default function EditUndanganForm({ undangan: u }: Props) {
         </div>
         <div style={sectionContentStyle}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '20px' }}>
-            {u.gallery_urls?.map((url, i) => (
-              <div key={i} style={{ aspectRatio: '1', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+            {galleryUrls.map((url, i) => (
+              <div key={i} style={{ aspectRatio: '1', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', position: 'relative' }}>
                 <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Gallery" />
+                <button type="button" onClick={() => handleRemoveGallery(url)} style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(239, 68, 68, 0.9)', color: '#fff', border: 'none', borderRadius: '50%', width: '24px', height: '24px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', padding: 0 }}>✕</button>
               </div>
             ))}
           </div>
