@@ -73,14 +73,17 @@ export default function Gallery({ images, accentColor, mutedColor, cardBg, borde
             justifyContent: 'center',
             zIndex: 2000,
             cursor: 'pointer',
-            padding: '24px',
+            padding: '16px',
+            boxSizing: 'border-box',
           }}
         >
           <img
             src={selected}
             alt="Gallery preview"
             style={{
-              maxWidth: '90%',
+              width: '100%',
+              height: '100%',
+              maxWidth: '900px',
               maxHeight: '85vh',
               borderRadius: '12px',
               boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
