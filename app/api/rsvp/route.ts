@@ -26,11 +26,13 @@ export async function POST(request: Request) {
     const supabase = await createClient()
 
     // Cari tamu berdasarkan link_token
-    const { data: tamu, error: tamuError } = await supabase
+    const { data: rawTamu, error: tamuError } = await supabase
       .from('tamu')
       .select('id, undangan_id, nama')
       .eq('link_token', token)
       .single()
+
+    const tamu = rawTamu as any;
 
     if (tamuError || !tamu) {
       return NextResponse.json(
@@ -48,7 +50,7 @@ export async function POST(request: Request) {
         status,
         jumlah_tamu: jumlah_tamu || 1,
         ucapan: ucapan || null,
-      }, { onConflict: 'tamu_id' })
+      } as any, { onConflict: 'tamu_id' })
 
     if (rsvpError) {
       console.error('RSVP error:', rsvpError)
