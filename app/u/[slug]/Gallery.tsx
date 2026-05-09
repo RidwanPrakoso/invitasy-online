@@ -81,13 +81,13 @@ export default function Gallery({ images, accentColor, mutedColor, cardBg, borde
             src={selected}
             alt="Gallery preview"
             style={{
-              width: '100%',
-              height: '100%',
-              maxWidth: '900px',
+              maxWidth: '95vw',
               maxHeight: '85vh',
               borderRadius: '12px',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.6)',
               objectFit: 'contain',
+              display: 'block',
+              margin: 'auto'
             }}
           />
           <button
