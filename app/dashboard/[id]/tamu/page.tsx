@@ -103,8 +103,7 @@ export default async function KelolaTamuPage({ params }: Props) {
                   </tr>
                 ) : (
                   tamuList.map((t) => {
-                    // Use origin if available, otherwise fallback
-                    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
+                    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
                     const guestUrl = `${baseUrl}/u/${undangan.slug}?t=${t.link_token}&untuk=${encodeURIComponent(t.nama)}`
                     return (
                       <tr key={t.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
