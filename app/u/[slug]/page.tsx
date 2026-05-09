@@ -23,7 +23,7 @@ export async function generateMetadata(
     .from('undangan')
     .select('mempelai_1, mempelai_2, foto_url')
     .eq('slug', slug)
-    .single()
+    .single() as { data: { mempelai_1: string, mempelai_2: string, foto_url: string | null } | null }
 
   if (!undangan) {
     return {
