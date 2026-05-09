@@ -464,11 +464,23 @@ export default function InvitationClient({
 
           {/* --- EVENT SECTION --- */}
           <section id="event" style={{ padding: '100px 0' }}>
-             <div className="reveal reveal-up" style={{ textAlign: 'center', marginBottom: '60px' }}>
+             <div className="reveal reveal-up" style={{ textAlign: 'center', marginBottom: '40px' }}>
                 <h2 style={{ fontSize: '32px', letterSpacing: '6px' }}>Wedding Event</h2>
                 <div className="luxury-line"></div>
                 <p style={{ color: s.muted, fontSize: '16px', marginTop: '12px' }}>Kami mengundang bapak/ibu untuk hadir pada:</p>
              </div>
+
+             {u.tanggal_resepsi && (
+               <div className="reveal reveal-up" style={{ marginBottom: '40px' }}>
+                 <Countdown 
+                    targetDate={u.tanggal_resepsi} 
+                    accentColor={s.accent} 
+                    mutedColor={s.muted} 
+                    cardBg={s.card} 
+                    borderColor={s.border} 
+                 />
+               </div>
+             )}
 
              <div className="reveal reveal-zoom luxury-card" style={{ display: 'grid', gap: '40px', background: 'rgba(255,255,255,0.6)' }}>
                 {/* Akad */}
