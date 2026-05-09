@@ -2,6 +2,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import { headers } from 'next/headers'
 import type { Tamu, Undangan } from '@/lib/supabase/types'
 import ImportTamuExcel from './ImportTamuExcel'
 import CopyLinkButton from './CopyLinkButton'
@@ -32,6 +33,11 @@ export default async function KelolaTamuPage({ params }: Props) {
     .select('*')
     .eq('undangan_id', id)
     .order('nama', { ascending: true }) as { data: Tamu[] }
+
+  const headerList = await headers()
+  const host = headerList.get('host')
+  const protocol = host?.includes('localhost') ? 'http' : 'https'
+  const baseUrl = `${protocol}://${host}`
 
   const tdStyle: React.CSSProperties = { padding: '16px', fontSize: '14px', color: '#64748b' }
   const iconBtnStyle: React.CSSProperties = {
@@ -79,7 +85,6 @@ export default async function KelolaTamuPage({ params }: Props) {
                   </tr>
                 ) : (
                   tamuList.map((t) => {
-                    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
                     const guestUrl = `${baseUrl}/u/${undangan.slug}?t=${t.link_token}&untuk=${encodeURIComponent(t.nama)}`
                     return (
                       <tr key={t.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
