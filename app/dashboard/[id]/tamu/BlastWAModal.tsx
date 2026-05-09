@@ -14,7 +14,27 @@ export default function BlastWAModal({ undangan, tamuList }: Props) {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [template, setTemplate] = useState(
-    `Halo *[nama]*, kami mengundang Anda untuk hadir di pernikahan kami.\n\nKlik link di bawah ini untuk melihat undangan digital kami:\n[link]\n\nTerima kasih.`
+`Assalamualaikum Wr Wb
+Yth. Bapak/Ibu/Saudara/i
+*[nama]*
+Di Tempat
+-----------
+Dengan segala kerendahan hati, kami mengundang Bapak/Ibu/Saudara/i dan teman-teman untuk menghadiri acara,
+===========
+Resepsi Pernikahan _*${undangan.mempelai_1} & ${undangan.mempelai_2}*_
+
+===========
+Pada:
+📅 Tanggal: ${undangan.tanggal_resepsi || '-'}
+📍 Lokasi: ${undangan.lokasi_resepsi || '-'}
+Link undangan bisa diakses lengkap di: [link]
+===========
+
+Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i *[nama]* berkenan untuk hadir dan memberikan doa restu.
+Mohon maaf perihal undangan hanya di bagikan melalui pesan ini.
+Wassalamualaikum Wr Wb
+kami yang berbahagia
+*${undangan.mempelai_1} & ${undangan.mempelai_2}*`
   )
 
   const pendingTamu = tamuList.filter(t => t.blast_status !== 'sent')
