@@ -65,15 +65,14 @@ export default function Gallery({ images, accentColor, mutedColor, cardBg, borde
             position: 'fixed',
             top: 0,
             left: 0,
-            width: '100vw',
-            height: '100vh',
-            background: 'rgba(0,0,0,0.85)',
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0,0,0,0.9)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 2000,
-            cursor: 'pointer',
-            padding: '16px',
+            zIndex: 9999,
+            padding: '20px',
             boxSizing: 'border-box',
           }}
         >
@@ -81,32 +80,34 @@ export default function Gallery({ images, accentColor, mutedColor, cardBg, borde
             src={selected}
             alt="Gallery preview"
             style={{
-              maxWidth: '95vw',
-              maxHeight: '85vh',
-              borderRadius: '12px',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.6)',
-              objectFit: 'contain',
-              display: 'block',
-              margin: 'auto'
+              maxWidth: '100%',
+              maxHeight: '100%',
+              width: 'auto',
+              height: 'auto',
+              borderRadius: '8px',
+              boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+              objectFit: 'scale-down',
             }}
+            onClick={(e) => e.stopPropagation()}
           />
           <button
             onClick={() => setSelected(null)}
             style={{
               position: 'absolute',
-              top: '24px',
-              right: '24px',
-              background: 'rgba(255,255,255,0.15)',
+              top: '20px',
+              right: '20px',
+              background: 'rgba(255,255,255,0.2)',
               border: 'none',
               borderRadius: '50%',
-              width: '44px',
-              height: '44px',
+              width: '40px',
+              height: '40px',
               color: '#fff',
               fontSize: '20px',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              zIndex: 10000,
             }}
           >
             ✕
