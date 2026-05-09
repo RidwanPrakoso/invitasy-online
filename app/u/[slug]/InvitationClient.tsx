@@ -470,10 +470,10 @@ export default function InvitationClient({
                 <p style={{ color: s.muted, fontSize: '16px', marginTop: '12px' }}>Kami mengundang bapak/ibu untuk hadir pada:</p>
              </div>
 
-             {u.tanggal_resepsi && (
-               <div className="reveal reveal-up" style={{ marginBottom: '40px' }}>
+             {(u.tanggal_resepsi || u.tanggal_akad) && (
+               <div style={{ marginBottom: '40px', textAlign: 'center' }}>
                  <Countdown 
-                    targetDate={u.tanggal_resepsi} 
+                    targetDate={(u.tanggal_resepsi || u.tanggal_akad) as string} 
                     accentColor={s.accent} 
                     mutedColor={s.muted} 
                     cardBg={s.card} 
