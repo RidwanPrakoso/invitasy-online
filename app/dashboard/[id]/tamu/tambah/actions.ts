@@ -96,7 +96,7 @@ export async function sendBlastFonnte(undanganId: string, template: string, sele
   // Siapkan data untuk Fonnte
   const targets = selectedTamu.map(t => t.no_wa).join(',')
   const messages = selectedTamu.map(t => {
-    const link = `${baseUrl}/u/${undangan.slug}?t=${t.link_token}`
+    const link = `${baseUrl}/u/${undangan.slug}?t=${t.link_token}&untuk=${encodeURIComponent(t.nama)}`
     return template.replace(/\[nama\]/gi, t.nama).replace(/\[link\]/gi, link)
   }).join('|')
 
