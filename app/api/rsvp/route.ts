@@ -22,9 +22,9 @@ export async function POST(request: Request) {
         .single()
 
       if (!tamuError && existingTamu) {
-        tamuId = existingTamu.id
-        undanganId = existingTamu.undangan_id
-        tamuNama = existingTamu.nama
+        tamuId = (existingTamu as any).id
+        undanganId = (existingTamu as any).undangan_id
+        tamuNama = (existingTamu as any).nama
       }
     }
 
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
         .maybeSingle()
 
       if (manualTamu) {
-        tamuId = manualTamu.id
+        tamuId = (manualTamu as any).id
       } else {
         // Buat record tamu baru (Manual)
         const { data: newTamu, error: createError } = await supabase
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
           .single()
         
         if (!createError && newTamu) {
-          tamuId = newTamu.id
+          tamuId = (newTamu as any).id
         }
       }
     }
