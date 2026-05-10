@@ -34,7 +34,10 @@ export default async function KelolaTamuPage({ params }: Props) {
     .eq('undangan_id', id)
     .order('nama', { ascending: true }) as { data: Tamu[] }
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://invitasy-online-f6an.vercel.app'
+  const headerList = await headers()
+  const host = headerList.get('host')
+  const protocol = host?.includes('localhost') ? 'http' : 'https'
+  const baseUrl = `${protocol}://${host}`
 
   const tdStyle: React.CSSProperties = { padding: '16px', fontSize: '14px', color: '#64748b' }
   const iconBtnStyle: React.CSSProperties = {

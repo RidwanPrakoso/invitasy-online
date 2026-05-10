@@ -14,7 +14,7 @@ type Status = 'hadir' | 'tidak' | 'ragu'
 
 export default function RSVPForm({ token, undanganId }: Props) {
   const [status, setStatus] = useState<Status>('hadir')
-  const [jumlah, setJumlah] = useState(1)
+  const [jumlah, setJumlah] = useState<number | ''>(1)
   const [ucapan, setUcapan] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -29,7 +29,7 @@ export default function RSVPForm({ token, undanganId }: Props) {
       const res = await fetch('/api/rsvp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, status, jumlah_tamu: jumlah, ucapan })
+        body: JSON.stringify({ token, status, jumlah_tamu: jumlah || 1, ucapan })
       })
 
       const data = await res.json()
@@ -127,8 +127,11 @@ export default function RSVPForm({ token, undanganId }: Props) {
               type="number"
               min="1"
               max="10"
-              value={jumlah}
-              onChange={e => setJumlah(parseInt(e.target.value) || 1)}
+              value={jumlah === '' ? '' : jumlah}
+              onChange={e => {
+                const val = e.target.value;
+                setJumlah(val === '' ? '' : parseInt(val));
+              }}
               style={{
                 width: '100%', padding: '10px 12px', border: '1px solid #e0e0e0',
                 borderRadius: '8px', fontSize: '13px', outline: 'none',

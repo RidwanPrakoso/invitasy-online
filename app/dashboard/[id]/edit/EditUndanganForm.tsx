@@ -49,6 +49,32 @@ export default function EditUndanganForm({ undangan: u }: Props) {
 
   return (
     <form action={formAction} onSubmit={handleSubmit} style={{ maxWidth: '1000px', margin: '0 auto', paddingBottom: '100px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+      <style>{`
+        input[type="file"]::file-selector-button {
+          background: #e2e8f0;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 6px;
+          color: #475569;
+          font-weight: 600;
+          font-size: 12px;
+          cursor: pointer;
+          transition: all 0.2s;
+          margin-right: 12px;
+        }
+        input[type="file"]::file-selector-button:hover {
+          background: #0f172a;
+          color: #fff;
+        }
+        input:focus, select:focus, textarea:focus {
+          border-color: #0f172a !important;
+          box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.05);
+        }
+        section:hover {
+          border-color: #e2e8f0 !important;
+          background: #fcfcfc;
+        }
+      `}</style>
       <input type="hidden" name="id" value={u.id} />
       <input type="hidden" name="foto_url_existing" value={isRemoved('foto_url') ? '' : (u.foto_url || '')} />
       <input type="hidden" name="music_url" value={isRemoved('music_url') ? '' : (u.music_url || '')} />
@@ -85,7 +111,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
             </div>
             <div style={inputGroupStyle}>
               <label style={labelStyle}>Foto Mempelai 1</label>
-              <input type="file" name="foto_mempelai_1_file" accept="image/*" style={inputStyle} />
+              <FileField name="foto_mempelai_1_file" accept="image/*" existing={u.foto_mempelai_1 && !isRemoved('foto_mempelai_1')} />
               {u.foto_mempelai_1 && !isRemoved('foto_mempelai_1') && (
                 <button type="button" onClick={() => handleRemove('foto_mempelai_1')} style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '2px 8px', borderRadius: '4px', fontSize: '10px', marginTop: '4px', cursor: 'pointer' }}>Hapus Foto</button>
               )}
@@ -111,7 +137,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
             </div>
             <div style={inputGroupStyle}>
               <label style={labelStyle}>Foto Mempelai 2</label>
-              <input type="file" name="foto_mempelai_2_file" accept="image/*" style={inputStyle} />
+              <FileField name="foto_mempelai_2_file" accept="image/*" existing={u.foto_mempelai_2 && !isRemoved('foto_mempelai_2')} />
               {u.foto_mempelai_2 && !isRemoved('foto_mempelai_2') && (
                 <button type="button" onClick={() => handleRemove('foto_mempelai_2')} style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '2px 8px', borderRadius: '4px', fontSize: '10px', marginTop: '4px', cursor: 'pointer' }}>Hapus Foto</button>
               )}
@@ -142,12 +168,12 @@ export default function EditUndanganForm({ undangan: u }: Props) {
                 <span style={{ fontSize: '32px' }}>💍</span>
               )}
             </div>
-            <div style={{ flex: 1 }}>
-              <input type="file" name="foto_file" accept="image/*" style={{ fontSize: '13px', color: '#64748b' }} />
+            <div style={{ flex: 1, padding: '20px', border: '2px dashed #e2e8f0', borderRadius: '12px', background: '#f8fafc' }}>
+              <FileField name="foto_file" accept="image/*" existing={u.foto_url && !isRemoved('foto_url')} />
               {u.foto_url && !isRemoved('foto_url') && (
                 <button type="button" onClick={() => handleRemove('foto_url')} style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 12px', borderRadius: '6px', fontSize: '11px', fontWeight: 600, marginTop: '8px', cursor: 'pointer' }}>Hapus Foto Sekarang</button>
               )}
-              <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '8px' }}>Maksimum file 2MB. Format JPG, PNG.</p>
+              <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '12px' }}>Maksimum file 2MB. Format JPG, PNG.</p>
             </div>
           </div>
         </div>
@@ -254,16 +280,18 @@ export default function EditUndanganForm({ undangan: u }: Props) {
           </div>
           <div style={{ ...inputGroupStyle, marginTop: '20px' }}>
             <label style={labelStyle}>Musik Latar (.mp3)</label>
-            <input type="file" name="music_file" accept=".mp3,audio/mpeg" style={{ ...inputStyle, padding: '8px' }} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }}>
-              <p style={{ fontSize: '12px', color: '#94a3b8', margin: 0 }}>
-                {u.music_url && !isRemoved('music_url') ? '🎵 Musik sudah terpasang.' : '❌ Belum ada musik.'}
-              </p>
-              {u.music_url && !isRemoved('music_url') && (
-                <button type="button" onClick={() => handleRemove('music_url')} style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '2px 8px', borderRadius: '4px', fontSize: '10px', cursor: 'pointer' }}>Hapus</button>
-              )}
+            <div style={{ padding: '16px', border: '1px solid #e2e8f0', borderRadius: '8px', background: '#f8fafc' }}>
+              <FileField name="music_file" accept=".mp3,audio/mpeg" existing={u.music_url && !isRemoved('music_url')} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }}>
+                <p style={{ fontSize: '12px', color: '#94a3b8', margin: 0 }}>
+                  {u.music_url && !isRemoved('music_url') ? '🎵 Musik sudah terpasang.' : '❌ Belum ada musik.'}
+                </p>
+                {u.music_url && !isRemoved('music_url') && (
+                  <button type="button" onClick={() => handleRemove('music_url')} style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '2px 8px', borderRadius: '4px', fontSize: '10px', cursor: 'pointer' }}>Hapus</button>
+                )}
+              </div>
+              <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '8px' }}>Pilih file MP3 baru untuk mengganti (Maksimal 10MB).</p>
             </div>
-            <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>Pilih file MP3 baru untuk mengganti (Maksimal 10MB).</p>
           </div>
         </div>
       </section>
@@ -308,7 +336,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
             ].map((item) => (
               <div key={item.id} style={inputGroupStyle}>
                 <label style={{ fontSize: '12px', fontWeight: 500, display: 'block', marginBottom: '8px' }}>{item.label}</label>
-                <input type="file" name={`bg_${item.id}_file`} accept="image/*" style={{ ...inputStyle, fontSize: '12px' }} />
+                <FileField name={`bg_${item.id}_file`} accept="image/*" existing={(u as any)[`bg_${item.id}`] && !isRemoved(`bg_${item.id}`)} />
                 <input type="hidden" name={`current_bg_${item.id}`} value={isRemoved(`bg_${item.id}`) ? '' : ((u as any)[`bg_${item.id}`] || '')} />
                 {(u as any)[`bg_${item.id}`] && !isRemoved(`bg_${item.id}`) && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
@@ -327,15 +355,18 @@ export default function EditUndanganForm({ undangan: u }: Props) {
           <p style={descStyle}>Tambahkan koleksi foto pre-wedding untuk dilihat para tamu.</p>
         </div>
         <div style={sectionContentStyle}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '16px', marginBottom: '24px' }}>
             {galleryUrls.map((url, i) => (
-              <div key={i} style={{ aspectRatio: '1', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', position: 'relative' }}>
+              <div key={i} style={{ aspectRatio: '1', borderRadius: '16px', overflow: 'hidden', border: '1px solid #e2e8f0', position: 'relative', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
                 <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Gallery" />
-                <button type="button" onClick={() => handleRemoveGallery(url)} style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(239, 68, 68, 0.9)', color: '#fff', border: 'none', borderRadius: '50%', width: '24px', height: '24px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', padding: 0 }}>✕</button>
+                <button type="button" onClick={() => handleRemoveGallery(url)} style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(239, 68, 68, 0.9)', color: '#fff', border: 'none', borderRadius: '50%', width: '28px', height: '28px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', padding: 0, backdropFilter: 'blur(4px)' }}>✕</button>
               </div>
             ))}
           </div>
-          <input type="file" name="gallery_files" accept="image/*" multiple style={{ fontSize: '13px', color: '#64748b' }} />
+          <div style={{ padding: '30px', border: '2px dashed #e2e8f0', borderRadius: '16px', background: '#f8fafc', textAlign: 'center' }}>
+            <FileField name="gallery_files" accept="image/*" multiple existing={false} />
+            <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '12px' }}>Tambah foto galeri baru (bisa pilih banyak).</p>
+          </div>
         </div>
       </section>
 
@@ -357,8 +388,9 @@ const formSectionStyle: React.CSSProperties = {
   display: 'grid',
   gridTemplateColumns: '220px 1fr',
   gap: '40px',
-  paddingBottom: '40px',
-  borderBottom: '1px solid #f1f5f9'
+  paddingBottom: '60px',
+  borderBottom: '1px solid #f1f5f9',
+  transition: 'all 0.3s ease'
 }
 
 const sectionHeaderStyle: React.CSSProperties = {
@@ -431,3 +463,37 @@ const btnPrimaryStyle: React.CSSProperties = {
 }
 
 const sectionTitleStyle: React.CSSProperties = {} // dummy for consistency
+
+function FileField({ name, accept, multiple = false, existing = false }: { name: string, accept: string, multiple?: boolean, existing?: any }) {
+  const [file, setFile] = useState<File | null>(null)
+  const [count, setCount] = useState(0)
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <label style={{
+        background: '#e2e8f0', color: '#475569', padding: '8px 16px', 
+        borderRadius: '8px', fontSize: '12px', fontWeight: 600, cursor: 'pointer',
+        display: 'inline-block', transition: 'all 0.2s'
+      }}>
+        {multiple ? 'Pilih Files' : (existing || file ? 'Ganti File' : 'Pilih File')}
+        <input 
+          type="file" 
+          name={name} 
+          accept={accept} 
+          multiple={multiple} 
+          style={{ display: 'none' }} 
+          onChange={(e) => {
+            const files = e.target.files
+            if (files && files.length > 0) {
+              setFile(files[0])
+              setCount(files.length)
+            }
+          }}
+        />
+      </label>
+      <span style={{ fontSize: '12px', color: (file || existing) ? '#0f172a' : '#94a3b8', fontWeight: (file || existing) ? 500 : 400 }}>
+        {file ? (multiple ? `${count} file terpilih` : file.name) : (existing ? (typeof existing === 'string' ? '✓ File Terpasang' : '✓ File Terpasang') : 'Belum ada file dipilih')}
+      </span>
+    </div>
+  )
+}

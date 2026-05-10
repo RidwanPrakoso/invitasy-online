@@ -35,6 +35,10 @@ export default function InvitationClient({
 
   useEffect(() => {
     if (!isOpen) return;
+    
+    // Trigger initially so the hero section appears without scrolling
+    setTimeout(handleReveal, 50);
+    
     window.addEventListener('scroll', handleReveal)
     return () => window.removeEventListener('scroll', handleReveal)
   }, [isOpen]);

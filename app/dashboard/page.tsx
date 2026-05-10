@@ -1,4 +1,3 @@
-// app/dashboard/page.tsx (Updated for Ultra-Modern UI)
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'

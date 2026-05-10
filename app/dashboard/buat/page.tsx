@@ -34,6 +34,32 @@ export default function BuatUndanganPage() {
 
   return (
     <main style={{ minHeight: '100vh', background: '#fff', paddingBottom: '100px', fontFamily: '"Inter", sans-serif' }}>
+      <style>{`
+        input[type="file"]::file-selector-button {
+          background: #e2e8f0;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 6px;
+          color: #475569;
+          font-weight: 600;
+          font-size: 12px;
+          cursor: pointer;
+          transition: all 0.2s;
+          margin-right: 12px;
+        }
+        input[type="file"]::file-selector-button:hover {
+          background: #0f172a;
+          color: #fff;
+        }
+        input:focus, select:focus, textarea:focus {
+          border-color: #0f172a !important;
+          box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.05);
+        }
+        section:hover {
+          border-color: #e2e8f0 !important;
+          background: #fcfcfc;
+        }
+      `}</style>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
       {/* Modern Navbar */}
@@ -56,9 +82,9 @@ export default function BuatUndanganPage() {
       </nav>
 
       <div style={{ maxWidth: '1000px', margin: '60px auto', padding: '0 24px' }}>
-        <div style={{ marginBottom: '60px' }}>
-           <h1 style={{ fontSize: '32px', fontWeight: 700, color: '#0f172a', marginBottom: '12px', letterSpacing: '-0.02em' }}>Mulai Undangan Baru</h1>
-           <p style={{ color: '#64748b', fontSize: '16px' }}>Isi informasi lengkap di bawah ini untuk membuat undangan digital kamu.</p>
+        <div style={{ marginBottom: '60px', textAlign: 'center' }}>
+           <h1 style={{ fontSize: '36px', fontWeight: 800, color: '#0f172a', marginBottom: '16px', letterSpacing: '-0.03em' }}>Buat Undangan Digital</h1>
+           <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '600px', margin: '0 auto' }}>Wujudkan momen spesialmu dengan undangan digital yang elegan dan modern.</p>
         </div>
 
         <form action={formAction} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
@@ -91,7 +117,7 @@ export default function BuatUndanganPage() {
                 </div>
                 <div style={inputGroupStyle}>
                   <label style={labelStyle}>Foto Mempelai 1</label>
-                  <input type="file" name="foto_mempelai_1_file" accept="image/*" style={inputStyle} />
+                  <FileField name="foto_mempelai_1_file" accept="image/*" />
                 </div>
                 <div style={inputGroupStyle}>
                   <label style={labelStyle}>Instagram Mempelai 1</label>
@@ -114,7 +140,7 @@ export default function BuatUndanganPage() {
                 </div>
                 <div style={inputGroupStyle}>
                   <label style={labelStyle}>Foto Mempelai 2</label>
-                  <input type="file" name="foto_mempelai_2_file" accept="image/*" style={inputStyle} />
+                  <FileField name="foto_mempelai_2_file" accept="image/*" />
                 </div>
                 <div style={inputGroupStyle}>
                   <label style={labelStyle}>Instagram Mempelai 2</label>
@@ -138,9 +164,9 @@ export default function BuatUndanganPage() {
                 }}>
                   <span style={{ fontSize: '32px' }}>💍</span>
                 </div>
-                <div style={{ flex: 1 }}>
-                  <input type="file" name="foto_file" accept="image/*" style={{ fontSize: '13px', color: '#64748b' }} />
-                  <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '8px' }}>Maksimum file 2MB. Format JPG, PNG.</p>
+                <div style={{ flex: 1, padding: '20px', border: '2px dashed #e2e8f0', borderRadius: '12px', background: '#f8fafc' }}>
+                  <FileField name="foto_file" accept="image/*" />
+                  <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '12px' }}>Maksimum file 2MB. Format JPG, PNG.</p>
                 </div>
               </div>
             </div>
@@ -245,11 +271,10 @@ export default function BuatUndanganPage() {
                   <input name="bank_owner_2" placeholder="Atas Nama" style={inputStyle} />
                 </div>
               </div>
-              <div style={{ ...inputGroupStyle, marginTop: '20px' }}>
-                <label style={labelStyle}>Musik Latar (.mp3)</label>
-                <input type="file" name="music_file" accept=".mp3,audio/mpeg" style={{ ...inputStyle, padding: '8px' }} />
-                <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>Pilih file MP3 untuk musik latar (Maksimal 10MB).</p>
-              </div>
+                <div style={{ padding: '16px', border: '1px solid #e2e8f0', borderRadius: '8px', background: '#f8fafc' }}>
+                  <FileField name="music_file" accept=".mp3,audio/mpeg" />
+                  <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '8px' }}>Pilih file MP3 untuk musik latar (Maksimal 10MB).</p>
+                </div>
             </div>
           </section>
 
@@ -293,7 +318,7 @@ export default function BuatUndanganPage() {
                 ].map((item) => (
                   <div key={item.id} style={inputGroupStyle}>
                     <label style={{ fontSize: '12px', fontWeight: 500, display: 'block', marginBottom: '8px' }}>{item.label}</label>
-                    <input type="file" name={`bg_${item.id}_file`} accept="image/*" style={{ ...inputStyle, fontSize: '12px' }} />
+                    <FileField name={`bg_${item.id}_file`} accept="image/*" />
                   </div>
                 ))}
               </div>
@@ -306,7 +331,10 @@ export default function BuatUndanganPage() {
               <p style={descStyle}>Tambahkan koleksi foto pre-wedding untuk dilihat para tamu.</p>
             </div>
             <div style={sectionContentStyle}>
-              <input type="file" name="gallery_files" accept="image/*" multiple style={{ fontSize: '13px', color: '#64748b' }} />
+              <div style={{ padding: '30px', border: '2px dashed #e2e8f0', borderRadius: '16px', background: '#f8fafc', textAlign: 'center' }}>
+                <FileField name="gallery_files" accept="image/*" multiple />
+                <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '12px' }}>Kamu bisa memilih beberapa foto sekaligus.</p>
+              </div>
             </div>
           </section>
 
@@ -330,8 +358,9 @@ const formSectionStyle: React.CSSProperties = {
   display: 'grid',
   gridTemplateColumns: '220px 1fr',
   gap: '40px',
-  paddingBottom: '40px',
-  borderBottom: '1px solid #f1f5f9'
+  paddingBottom: '60px',
+  borderBottom: '1px solid #f1f5f9',
+  transition: 'all 0.3s ease'
 }
 
 const sectionHeaderStyle: React.CSSProperties = {
@@ -401,4 +430,38 @@ const btnPrimaryStyle: React.CSSProperties = {
   fontWeight: 600,
   cursor: 'pointer',
   boxShadow: '0 4px 12px rgba(15, 23, 42, 0.15)'
+}
+
+function FileField({ name, accept, multiple = false }: { name: string, accept: string, multiple?: boolean }) {
+  const [file, setFile] = (require('react').useState)(null)
+  const [count, setCount] = (require('react').useState)(0)
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <label style={{
+        background: '#e2e8f0', color: '#475569', padding: '8px 16px', 
+        borderRadius: '8px', fontSize: '12px', fontWeight: 600, cursor: 'pointer',
+        display: 'inline-block', transition: 'all 0.2s'
+      }}>
+        {multiple ? 'Pilih Files' : (file ? 'Ganti File' : 'Pilih File')}
+        <input 
+          type="file" 
+          name={name} 
+          accept={accept} 
+          multiple={multiple} 
+          style={{ display: 'none' }} 
+          onChange={(e: any) => {
+            const files = e.target.files
+            if (files && files.length > 0) {
+              setFile(files[0])
+              setCount(files.length)
+            }
+          }}
+        />
+      </label>
+      <span style={{ fontSize: '12px', color: file ? '#0f172a' : '#94a3b8', fontWeight: file ? 500 : 400 }}>
+        {file ? (multiple ? `${count} file terpilih` : file.name) : 'Belum ada file dipilih'}
+      </span>
+    </div>
+  )
 }
