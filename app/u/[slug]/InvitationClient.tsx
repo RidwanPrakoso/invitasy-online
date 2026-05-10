@@ -597,7 +597,7 @@ export default function InvitationClient({
                 <div className="luxury-line"></div>
              </div>
              <div className="reveal reveal-up luxury-card">
-                <RSVPForm token={token || ''} undanganId={u.id} />
+                <RSVPForm token={token || ''} undanganId={u.id} namaTamu={tamu?.nama} />
              </div>
              <div style={{ marginTop: '40px' }}>
                 <div className="reveal reveal-up">

@@ -9,14 +9,16 @@ import { useRouter } from 'next/navigation'
 interface Props {
   token: string
   undanganId: string
+  namaTamu?: string
 }
 
 type Status = 'hadir' | 'tidak' | 'ragu'
 
-export default function RSVPForm({ token, undanganId }: Props) {
+export default function RSVPForm({ token, undanganId, namaTamu }: Props) {
   const [status, setStatus] = useState<Status>('hadir')
   const [jumlah, setJumlah] = useState<number | ''>(1)
   const [ucapan, setUcapan] = useState('')
+  const [nama, setNama] = useState(namaTamu || '')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
@@ -24,6 +26,12 @@ export default function RSVPForm({ token, undanganId }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    
+    if (!token && !nama.trim()) {
+      setError('Silakan masukkan nama kamu.')
+      return
+    }
+
     setLoading(true)
     setError('')
 
@@ -31,7 +39,14 @@ export default function RSVPForm({ token, undanganId }: Props) {
       const res = await fetch('/api/rsvp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, status, jumlah_tamu: jumlah || 1, ucapan })
+        body: JSON.stringify({ 
+          token, 
+          status, 
+          jumlah_tamu: jumlah || 1, 
+          ucapan,
+          nama: nama.trim(),
+          undangan_id: undanganId
+        })
       })
 
       const data = await res.json()
@@ -48,7 +63,7 @@ export default function RSVPForm({ token, undanganId }: Props) {
         Swal.fire({
           icon: 'success',
           title: 'Berhasil!',
-          text: 'Konfirmasi kehadiran kamu telah tersimpan.',
+          text: data.message || 'Konfirmasi kehadiran kamu telah tersimpan.',
           confirmButtonColor: '#111'
         }).then(() => {
           router.refresh()
@@ -113,6 +128,25 @@ export default function RSVPForm({ token, undanganId }: Props) {
       </h2>
 
       <form onSubmit={handleSubmit}>
+        {/* Nama (Hanya muncul jika tidak ada token unik) */}
+        {!token && (
+          <div style={{ marginBottom: '16px' }}>
+            <p style={{ fontSize: '12px', color: '#888', marginBottom: '8px' }}>Nama kamu</p>
+            <input
+              type="text"
+              required
+              value={nama}
+              onChange={e => setNama(e.target.value)}
+              style={{
+                width: '100%', padding: '10px 12px', border: '1px solid #e0e0e0',
+                borderRadius: '8px', fontSize: '13px', outline: 'none',
+                boxSizing: 'border-box' as const
+              }}
+              placeholder="Masukkan nama lengkap..."
+            />
+          </div>
+        )}
+
         {/* Status */}
         <div style={{ marginBottom: '16px' }}>
           <p style={{ fontSize: '12px', color: '#888', marginBottom: '8px' }}>Konfirmasi</p>
