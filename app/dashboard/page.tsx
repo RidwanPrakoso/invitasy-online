@@ -17,13 +17,56 @@ export default async function DashboardPage() {
   const totalUndangan = undanganList?.length || 0
 
   return (
-    <main style={{ display: 'flex', minHeight: '100vh', background: '#fff', fontFamily: '"Inter", sans-serif' }}>
+    <main className="dashboard-container" style={{ display: 'flex', minHeight: '100vh', background: '#fff', fontFamily: '"Inter", sans-serif' }}>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
+      {/* Responsive Styles */}
+      <style>{`
+        .dashboard-container { flex-direction: row; }
+        .dashboard-sidebar {
+          width: 280px; position: fixed; height: 100vh;
+        }
+        .dashboard-main {
+          margin-left: 280px; padding: 60px 8%; flex: 1;
+        }
+        .dashboard-header {
+          display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px;
+        }
+        .modern-card {
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        .modern-card:hover {
+          transform: scale(1.01);
+          box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+          border-color: #e2e2e2;
+        }
+
+        @media (max-width: 768px) {
+          .dashboard-container { flex-direction: column; }
+          .dashboard-sidebar {
+            width: 100%; position: relative; height: auto; padding: 20px !important;
+            border-right: none !important; border-bottom: 1px solid #f2f2f2 !important;
+          }
+          .dashboard-main {
+            margin-left: 0; padding: 24px !important;
+          }
+          .dashboard-header {
+            flex-direction: column; align-items: flex-start; gap: 20px;
+          }
+          .modern-card {
+            flex-direction: column; align-items: flex-start; gap: 20px; padding: 20px !important;
+          }
+          .card-actions {
+            width: 100%; flex-wrap: wrap; justify-content: space-between;
+          }
+          .sidebar-bottom { display: none !important; /* Hide user profile on mobile to save space */ }
+        }
+      `}</style>
+
       {/* --- SIDEBAR (Minimalist White) --- */}
-      <aside style={{
-        width: '280px', background: '#fff', borderRight: '1px solid #f2f2f2',
-        display: 'flex', flexDirection: 'column', padding: '32px 24px', position: 'fixed', height: '100vh', zIndex: 50
+      <aside className="dashboard-sidebar" style={{
+        background: '#fff', borderRight: '1px solid #f2f2f2',
+        display: 'flex', flexDirection: 'column', padding: '32px 24px', zIndex: 50
       }}>
         <div style={{ fontSize: '22px', fontWeight: 800, color: '#000', marginBottom: '48px', letterSpacing: '-1px' }}>
           Undangan<span style={{ color: '#3b82f6' }}>Digital</span>
@@ -34,7 +77,7 @@ export default async function DashboardPage() {
           <SidebarLink href="/dashboard/buat">Buat Baru</SidebarLink>
         </nav>
 
-        <div style={{ marginTop: 'auto', paddingTop: '24px', borderTop: '1px solid #f2f2f2' }}>
+        <div className="sidebar-bottom" style={{ marginTop: 'auto', paddingTop: '24px', borderTop: '1px solid #f2f2f2' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: '#3b82f6', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
                 {user.email?.[0].toUpperCase()}
@@ -57,8 +100,8 @@ export default async function DashboardPage() {
       </aside>
 
       {/* --- MAIN CONTENT --- */}
-      <section style={{ marginLeft: '280px', flex: 1, padding: '60px 8%' }}>
-        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px' }}>
+      <section className="dashboard-main">
+        <header className="dashboard-header">
           <div>
             <h1 style={{ fontSize: '36px', fontWeight: 800, color: '#000', letterSpacing: '-1.5px', marginBottom: '8px' }}>Dashboard</h1>
             <p style={{ color: '#888', fontSize: '16px' }}>Overview of all your digital invitations.</p>
@@ -103,8 +146,7 @@ function InvitationModernCard({ u }: { u: Undangan }) {
   return (
     <div className="modern-card" style={{
       background: '#fff', borderRadius: '20px', border: '1px solid #f2f2f2',
-      padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      boxShadow: '0 1px 2px rgba(0,0,0,0.02)', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+      padding: '24px', boxShadow: '0 1px 2px rgba(0,0,0,0.02)', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
         {/* Visual */}
@@ -133,7 +175,7 @@ function InvitationModernCard({ u }: { u: Undangan }) {
       </div>
 
       {/* Actions */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div className="card-actions" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         <div style={{ display: 'flex', background: '#f9f9f9', padding: '4px', borderRadius: '12px', gap: '4px' }}>
            <Link href={`/u/${u.slug}`} target="_blank" style={iconActionBtn} title="Preview">👁️</Link>
            <Link href={`/dashboard/${u.id}/edit`} style={iconActionBtn} title="Settings">⚙️</Link>
@@ -143,14 +185,6 @@ function InvitationModernCard({ u }: { u: Undangan }) {
            Laporan RSVP
         </Link>
       </div>
-
-      <style>{`
-        .modern-card:hover {
-          transform: scale(1.01);
-          box-shadow: 0 12px 30px rgba(0,0,0,0.04);
-          border-color: #e2e2e2;
-        }
-      `}</style>
     </div>
   )
 }
@@ -159,13 +193,15 @@ function InvitationModernCard({ u }: { u: Undangan }) {
 const btnPrimaryMain: React.CSSProperties = {
   background: '#000', color: '#fff', padding: '14px 28px',
   borderRadius: '12px', fontSize: '15px', fontWeight: 700, textDecoration: 'none',
-  boxShadow: '0 10px 20px rgba(0,0,0,0.1)', transition: 'all 0.2s'
+  boxShadow: '0 10px 20px rgba(0,0,0,0.1)', transition: 'all 0.2s',
+  display: 'inline-block'
 }
 
 const btnPrimaryRSVP: React.CSSProperties = {
   background: '#3b82f6', color: '#fff', padding: '12px 24px',
   borderRadius: '12px', fontSize: '14px', fontWeight: 700, textDecoration: 'none',
-  boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)', transition: 'all 0.2s'
+  boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)', transition: 'all 0.2s',
+  textAlign: 'center'
 }
 
 const iconActionBtn: React.CSSProperties = {

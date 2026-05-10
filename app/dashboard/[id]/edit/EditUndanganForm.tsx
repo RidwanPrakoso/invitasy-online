@@ -74,6 +74,20 @@ export default function EditUndanganForm({ undangan: u }: Props) {
           border-color: #e2e8f0 !important;
           background: #fcfcfc;
         }
+        .responsive-section {
+          display: grid; grid-template-columns: 220px 1fr; gap: 40px;
+          padding-bottom: 60px; border-bottom: 1px solid #f1f5f9; transition: all 0.3s ease;
+        }
+        .responsive-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .responsive-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .responsive-flex-wrap { display: flex; gap: 24px; align-items: center; }
+        
+        @media (max-width: 768px) {
+          .responsive-section { grid-template-columns: 1fr; gap: 20px; }
+          .responsive-grid-2 { grid-template-columns: 1fr; }
+          .responsive-grid-3 { grid-template-columns: 1fr; }
+          .responsive-flex-wrap { flex-direction: column; align-items: flex-start; }
+        }
       `}</style>
       <input type="hidden" name="id" value={u.id} />
       <input type="hidden" name="foto_url_existing" value={isRemoved('foto_url') ? '' : (u.foto_url || '')} />
@@ -83,7 +97,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
       <input type="hidden" name="gallery_urls_existing" value={galleryUrls.join(',')} />
 
       {/* --- SECTION 1: IDENTITAS --- */}
-      <section style={formSectionStyle}>
+      <section className="responsive-section">
         <div style={sectionHeaderStyle}>
           <h2 style={h2Style}>Informasi Dasar</h2>
           <p style={descStyle}>Atur alamat URL dan nama mempelai yang akan ditampilkan di undangan.</p>
@@ -96,7 +110,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
               <input name="slug" defaultValue={u.slug} required style={{ ...inputStyle, borderRadius: '0 8px 8px 0' }} />
             </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '20px' }}>
+          <div className="responsive-grid-2" style={{ marginTop: '20px' }}>
             <div style={inputGroupStyle}>
               <label style={labelStyle}>Nama Mempelai 1</label>
               <input name="mempelai_1" defaultValue={u.mempelai_1} required style={inputStyle} />
@@ -151,13 +165,13 @@ export default function EditUndanganForm({ undangan: u }: Props) {
       </section>
 
       {/* --- SECTION 2: FOTO UTAMA --- */}
-      <section style={formSectionStyle}>
+      <section className="responsive-section">
         <div style={sectionHeaderStyle}>
           <h2 style={h2Style}>Foto Sampul</h2>
           <p style={descStyle}>Gunakan foto terbaik kamu untuk halaman depan undangan.</p>
         </div>
         <div style={sectionContentStyle}>
-          <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+          <div className="responsive-flex-wrap">
             <div style={{
               width: '120px', height: '120px', borderRadius: '16px', background: '#f1f5f9',
               overflow: 'hidden', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center'
@@ -180,7 +194,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
       </section>
 
        {/* --- SECTION 3: JADWAL & LOKASI --- */}
-       <section style={formSectionStyle}>
+       <section className="responsive-section">
          <div style={sectionHeaderStyle}>
            <h2 style={h2Style}>Waktu & Tempat</h2>
            <p style={descStyle}>Informasi detail mengenai kapan dan di mana acara akan berlangsung.</p>
@@ -189,7 +203,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
            {/* Akad Nikah */}
            <div style={{ marginBottom: '32px', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
              <h3 style={{ fontSize: '14px', fontWeight: 700, marginBottom: '16px', color: '#1e293b' }}>🏛️ AKAD NIKAH</h3>
-             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+             <div className="responsive-grid-2">
                 <div style={inputGroupStyle}>
                    <label style={labelStyle}>Tanggal & Jam Akad</label>
                    <input type="datetime-local" name="tanggal_akad" defaultValue={formatDT(u.tanggal_akad)} required style={inputStyle} />
@@ -212,7 +226,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
            {/* Resepsi */}
            <div style={{ marginBottom: '24px', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
              <h3 style={{ fontSize: '14px', fontWeight: 700, marginBottom: '16px', color: '#1e293b' }}>💍 RESEPSI</h3>
-             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+             <div className="responsive-grid-2">
                 <div style={inputGroupStyle}>
                    <label style={labelStyle}>Tanggal & Jam Resepsi</label>
                    <input type="datetime-local" name="tanggal_resepsi" defaultValue={formatDT(u.tanggal_resepsi)} style={inputStyle} />
@@ -235,7 +249,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
        </section>
 
       {/* --- SECTION 4: MEDIA & TEMA --- */}
-      <section style={formSectionStyle}>
+      <section className="responsive-section">
         <div style={sectionHeaderStyle}>
           <h2 style={h2Style}>Desain & Musik</h2>
           <p style={descStyle}>Personalisasi tampilan undangan agar sesuai dengan karakter kamu.</p>
@@ -265,14 +279,14 @@ export default function EditUndanganForm({ undangan: u }: Props) {
             <p style={{ fontSize: '12px', color: '#64748b', marginBottom: '16px' }}>Tambahkan informasi rekening bank untuk kado digital.</p>
             
             {/* Bank Slot 1 */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+            <div className="responsive-grid-3" style={{ marginBottom: '10px' }}>
               <input name="bank_name_1" placeholder="Nama Bank (BCA/BNI)" defaultValue={(u.wedding_gift as any)?.[0]?.bank || ''} style={inputStyle} />
               <input name="bank_acc_1" placeholder="Nomor Rekening" defaultValue={(u.wedding_gift as any)?.[0]?.acc || ''} style={inputStyle} />
               <input name="bank_owner_1" placeholder="Atas Nama" defaultValue={(u.wedding_gift as any)?.[0]?.owner || ''} style={inputStyle} />
             </div>
 
             {/* Bank Slot 2 */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px' }}>
+            <div className="responsive-grid-3">
               <input name="bank_name_2" placeholder="Nama Bank (Mandiri/QRIS)" defaultValue={(u.wedding_gift as any)?.[1]?.bank || ''} style={inputStyle} />
               <input name="bank_acc_2" placeholder="Nomor Rekening" defaultValue={(u.wedding_gift as any)?.[1]?.acc || ''} style={inputStyle} />
               <input name="bank_owner_2" placeholder="Atas Nama" defaultValue={(u.wedding_gift as any)?.[1]?.owner || ''} style={inputStyle} />
@@ -297,12 +311,12 @@ export default function EditUndanganForm({ undangan: u }: Props) {
       </section>
 
       {/* --- SECTION 5: KUSTOMISASI VISUAL --- */}
-      <section style={formSectionStyle}>
+      <section className="responsive-section">
         <div style={sectionHeaderStyle}>
           <h2 style={h2Style}>Tema Visual & Animasi</h2>
           <p style={descStyle}>Pilih latar belakang dan efek animasi untuk undangan kamu.</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+        <div className="responsive-grid-2">
           <div style={inputGroupStyle}>
             <label style={labelStyle}>Tipe Background Utama</label>
             <select name="background_type" defaultValue={u.background_type || 'polos'} style={inputStyle}>
@@ -349,7 +363,7 @@ export default function EditUndanganForm({ undangan: u }: Props) {
           </div>
         </div>
       </section>
-      <section style={formSectionStyle}>
+      <section className="responsive-section">
         <div style={sectionHeaderStyle}>
           <h2 style={h2Style}>Galeri Foto</h2>
           <p style={descStyle}>Tambahkan koleksi foto pre-wedding untuk dilihat para tamu.</p>

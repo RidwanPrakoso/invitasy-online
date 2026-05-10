@@ -46,6 +46,13 @@ export default async function RSVPPage({ params }: Props) {
     <main style={{ minHeight: '100vh', background: '#f8fafc', paddingBottom: '80px', fontFamily: '"Inter", sans-serif' }}>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
+      <style>{`
+        .responsive-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px; }
+        @media (max-width: 768px) {
+          .responsive-grid-3 { grid-template-columns: 1fr; }
+        }
+      `}</style>
+
       {/* Navbar Modern */}
       <nav style={{
         background: '#fff', borderBottom: '1px solid #e2e8f0',
@@ -75,7 +82,7 @@ export default async function RSVPPage({ params }: Props) {
         </div>
 
         {/* Summary Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '32px' }}>
+        <div className="responsive-grid-3">
           <div style={cardStyle}>
             <p style={labelStyle}>Total Tamu (Pax)</p>
             <h2 style={valueStyle}>{totalPax}</h2>

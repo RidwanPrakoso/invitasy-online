@@ -67,51 +67,64 @@ export default function Gallery({ images, accentColor, mutedColor, cardBg, borde
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'rgba(0,0,0,0.9)',
+            background: 'rgba(0,0,0,0.85)',
+            backdropFilter: 'blur(5px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 9999,
+            zIndex: 99999, /* increased z-index to be above music player */
             padding: '20px',
             boxSizing: 'border-box',
           }}
         >
-          <img
-            src={selected}
-            alt="Gallery preview"
-            style={{
-              maxWidth: '100%',
-              maxHeight: '100%',
-              width: 'auto',
-              height: 'auto',
-              borderRadius: '8px',
-              boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
-              objectFit: 'scale-down',
-            }}
-            onClick={(e) => e.stopPropagation()}
-          />
-          <button
-            onClick={() => setSelected(null)}
-            style={{
-              position: 'absolute',
-              top: '20px',
-              right: '20px',
-              background: 'rgba(255,255,255,0.2)',
-              border: 'none',
-              borderRadius: '50%',
-              width: '40px',
-              height: '40px',
-              color: '#fff',
-              fontSize: '20px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10000,
-            }}
-          >
-            ✕
-          </button>
+          <div style={{ position: 'relative', display: 'inline-flex' }} onClick={(e) => e.stopPropagation()}>
+            <img
+              src={selected}
+              alt="Gallery preview"
+              style={{
+                maxWidth: '90vw',
+                maxHeight: '80vh',
+                width: 'auto',
+                height: 'auto',
+                borderRadius: '12px',
+                boxShadow: '0 15px 50px rgba(0,0,0,0.4)',
+                objectFit: 'contain',
+              }}
+            />
+            <button
+              onClick={() => setSelected(null)}
+              style={{
+                position: 'absolute',
+                top: '-16px',
+                right: '-16px',
+                background: 'rgba(0,0,0,0.8)',
+                border: '1px solid rgba(255,255,255,0.3)',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                color: '#fff',
+                fontSize: '18px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 100000,
+                backdropFilter: 'blur(4px)',
+                transition: 'all 0.2s ease',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.2)';
+                (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = 'rgba(0,0,0,0.8)';
+                (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)';
+              }}
+            >
+              ✕
+            </button>
+          </div>
         </div>
       )}
     </>

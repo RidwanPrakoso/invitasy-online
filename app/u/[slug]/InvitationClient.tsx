@@ -7,6 +7,7 @@ import Countdown from './Countdown'
 import MusicPlayer from './MusicPlayer'
 import Gallery from './Gallery'
 import type { Undangan, Tamu } from '@/lib/supabase/types'
+import Swal from 'sweetalert2'
 
 export default function InvitationClient({
   undangan: u, tamu, guestbook, token
@@ -569,7 +570,17 @@ export default function InvitationClient({
                            <p style={{ fontSize: '28px', fontWeight: 700, letterSpacing: '2px', margin: '0 0 8px', color: s.accent }}>{bank.acc}</p>
                            <p style={{ fontSize: '18px', color: s.text, fontWeight: 600 }}>a.n {bank.owner}</p>
                            <button 
-                              onClick={() => { navigator.clipboard.writeText(bank.acc); alert('Nomor rekening disalin!'); }}
+                              onClick={() => { 
+                                 navigator.clipboard.writeText(bank.acc); 
+                                 Swal.fire({
+                                    title: 'Tersalin!',
+                                    text: `Nomor rekening ${bank.acc} berhasil disalin.`,
+                                    icon: 'success',
+                                    confirmButtonColor: s.accent,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                 });
+                              }}
                               style={{ marginTop: '24px', background: 'none', border: `1px solid ${s.border}`, padding: '10px 24px', cursor: 'pointer', fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase', color: s.accent }}
                            >Salin Rekening</button>
                         </div>

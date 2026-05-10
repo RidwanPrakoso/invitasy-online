@@ -59,6 +59,20 @@ export default function BuatUndanganPage() {
           border-color: #e2e8f0 !important;
           background: #fcfcfc;
         }
+        .responsive-section {
+          display: grid; grid-template-columns: 220px 1fr; gap: 40px;
+          padding-bottom: 60px; border-bottom: 1px solid #f1f5f9; transition: all 0.3s ease;
+        }
+        .responsive-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .responsive-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .responsive-flex-wrap { display: flex; gap: 24px; align-items: center; }
+        
+        @media (max-width: 768px) {
+          .responsive-section { grid-template-columns: 1fr; gap: 20px; }
+          .responsive-grid-2 { grid-template-columns: 1fr; }
+          .responsive-grid-3 { grid-template-columns: 1fr; }
+          .responsive-flex-wrap { flex-direction: column; align-items: flex-start; }
+        }
       `}</style>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
@@ -89,7 +103,7 @@ export default function BuatUndanganPage() {
 
         <form action={formAction} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
           {/* --- SECTION 1: IDENTITAS --- */}
-          <section style={formSectionStyle}>
+          <section className="responsive-section">
             <div style={sectionHeaderStyle}>
               <h2 style={h2Style}>Informasi Dasar</h2>
               <p style={descStyle}>Atur alamat URL dan nama mempelai yang akan ditampilkan di undangan.</p>
@@ -102,7 +116,7 @@ export default function BuatUndanganPage() {
                   <input name="slug" required placeholder="budi-siti" style={{ ...inputStyle, borderRadius: '0 8px 8px 0' }} />
                 </div>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '20px' }}>
+              <div className="responsive-grid-2" style={{ marginTop: '20px' }}>
                 <div style={inputGroupStyle}>
                   <label style={labelStyle}>Nama Mempelai 1</label>
                   <input name="mempelai_1" required placeholder="Nama Panggilan 1" style={inputStyle} />
@@ -151,13 +165,13 @@ export default function BuatUndanganPage() {
           </section>
 
           {/* --- SECTION 2: FOTO UTAMA --- */}
-          <section style={formSectionStyle}>
+          <section className="responsive-section">
             <div style={sectionHeaderStyle}>
               <h2 style={h2Style}>Foto Sampul</h2>
               <p style={descStyle}>Gunakan foto terbaik kamu untuk halaman depan undangan.</p>
             </div>
             <div style={sectionContentStyle}>
-              <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+              <div className="responsive-flex-wrap">
                 <div style={{
                   width: '120px', height: '120px', borderRadius: '16px', background: '#f1f5f9',
                   overflow: 'hidden', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center'
@@ -173,7 +187,7 @@ export default function BuatUndanganPage() {
           </section>
 
           {/* --- SECTION 3: JADWAL & LOKASI --- */}
-          <section style={formSectionStyle}>
+          <section className="responsive-section">
             <div style={sectionHeaderStyle}>
               <h2 style={h2Style}>Waktu & Tempat</h2>
               <p style={descStyle}>Informasi detail mengenai kapan dan di mana acara akan berlangsung.</p>
@@ -182,7 +196,7 @@ export default function BuatUndanganPage() {
               {/* Akad Nikah */}
               <div style={{ marginBottom: '32px', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '14px', fontWeight: 700, marginBottom: '16px', color: '#1e293b' }}>🏛️ AKAD NIKAH</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="responsive-grid-2">
                     <div style={inputGroupStyle}>
                       <label style={labelStyle}>Tanggal & Jam Akad</label>
                       <input type="datetime-local" name="tanggal_akad" required style={inputStyle} />
@@ -205,7 +219,7 @@ export default function BuatUndanganPage() {
               {/* Resepsi */}
               <div style={{ marginBottom: '24px', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '14px', fontWeight: 700, marginBottom: '16px', color: '#1e293b' }}>💍 RESEPSI</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="responsive-grid-2">
                     <div style={inputGroupStyle}>
                       <label style={labelStyle}>Tanggal & Jam Resepsi</label>
                       <input type="datetime-local" name="tanggal_resepsi" style={inputStyle} />
@@ -228,7 +242,7 @@ export default function BuatUndanganPage() {
           </section>
 
           {/* --- SECTION 4: MEDIA & TEMA --- */}
-          <section style={formSectionStyle}>
+          <section className="responsive-section">
             <div style={sectionHeaderStyle}>
               <h2 style={h2Style}>Desain & Musik</h2>
               <p style={descStyle}>Personalisasi tampilan undangan agar sesuai dengan karakter kamu.</p>
@@ -258,14 +272,14 @@ export default function BuatUndanganPage() {
                 <p style={{ fontSize: '12px', color: '#64748b', marginBottom: '16px' }}>Tambahkan informasi rekening bank untuk kado digital.</p>
                 
                 {/* Bank Slot 1 */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                <div className="responsive-grid-3" style={{ marginBottom: '10px' }}>
                   <input name="bank_name_1" placeholder="Nama Bank (BCA/BNI)" style={inputStyle} />
                   <input name="bank_acc_1" placeholder="Nomor Rekening" style={inputStyle} />
                   <input name="bank_owner_1" placeholder="Atas Nama" style={inputStyle} />
                 </div>
 
                 {/* Bank Slot 2 */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px' }}>
+                <div className="responsive-grid-3">
                   <input name="bank_name_2" placeholder="Nama Bank (Mandiri/QRIS)" style={inputStyle} />
                   <input name="bank_acc_2" placeholder="Nomor Rekening" style={inputStyle} />
                   <input name="bank_owner_2" placeholder="Atas Nama" style={inputStyle} />
@@ -279,12 +293,12 @@ export default function BuatUndanganPage() {
           </section>
 
           {/* --- SECTION 5: KUSTOMISASI VISUAL --- */}
-          <section style={formSectionStyle}>
+          <section className="responsive-section">
             <div style={sectionHeaderStyle}>
               <h2 style={h2Style}>Tema Visual & Animasi</h2>
               <p style={descStyle}>Pilih latar belakang dan efek animasi untuk undangan kamu.</p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="responsive-grid-2">
               <div style={inputGroupStyle}>
                 <label style={labelStyle}>Tipe Background Utama</label>
                 <select name="background_type" defaultValue="polos" style={inputStyle}>
@@ -325,7 +339,7 @@ export default function BuatUndanganPage() {
             </div>
           </section>
           
-          <section style={formSectionStyle}>
+          <section className="responsive-section">
             <div style={sectionHeaderStyle}>
               <h2 style={h2Style}>Galeri Foto</h2>
               <p style={descStyle}>Tambahkan koleksi foto pre-wedding untuk dilihat para tamu.</p>

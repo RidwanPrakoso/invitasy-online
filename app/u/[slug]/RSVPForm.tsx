@@ -4,6 +4,7 @@
 
 import { useState } from 'react'
 import Swal from 'sweetalert2'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   token: string
@@ -19,6 +20,7 @@ export default function RSVPForm({ token, undanganId }: Props) {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+  const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -48,6 +50,8 @@ export default function RSVPForm({ token, undanganId }: Props) {
           title: 'Berhasil!',
           text: 'Konfirmasi kehadiran kamu telah tersimpan.',
           confirmButtonColor: '#111'
+        }).then(() => {
+          router.refresh()
         })
       }
     } catch (err) {

@@ -29,12 +29,14 @@ export default async function TambahTamuPage({ params }: Props) {
     <main style={{ minHeight: '100vh', background: '#f8fafc', paddingBottom: '80px', fontFamily: '"Inter", sans-serif' }}>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-      <nav style={{
-        background: '#fff', borderBottom: '1px solid #e2e8f0',
-        padding: '0 5%', height: '64px', display: 'flex',
-        alignItems: 'center', justifyContent: 'space-between',
-        position: 'sticky', top: 0, zIndex: 100
-      }}>
+      <style>{`
+        .responsive-nav {
+          background: #fff; border-bottom: 1px solid #e2e8f0; padding: 0 5%;
+          min-height: 64px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 12px; padding-bottom: 12px; position: sticky; top: 0; z-index: 100;
+        }
+      `}</style>
+
+      <nav className="responsive-nav">
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <Link href={`/dashboard/${id}/tamu`} style={{
             fontSize: '13px', color: '#64748b', textDecoration: 'none',

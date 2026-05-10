@@ -48,24 +48,36 @@ export default async function KelolaTamuPage({ params }: Props) {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc', paddingBottom: '80px' }}>
-      <nav style={{ background: '#fff', borderBottom: '1px solid #e2e8f0', padding: '0 5%', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <style>{`
+        .responsive-nav {
+          background: #fff; border-bottom: 1px solid #e2e8f0; padding: 0 5%;
+          min-height: 64px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 12px; padding-bottom: 12px;
+        }
+        .responsive-nav-actions {
+          display: flex; gap: 12px; flex-wrap: wrap;
+        }
+        .table-container {
+          background: #fff; border-radius: 16px; border: 1px solid #e2e8f0; overflow-x: auto;
+        }
+      `}</style>
+      <nav className="responsive-nav">
          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <Link href="/dashboard" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px' }}>← Dashboard</Link>
             <h1 style={{ fontSize: '18px', fontWeight: 700, color: '#0f172a' }}>Kelola Tamu</h1>
          </div>
-         <div style={{ display: 'flex', gap: '12px' }}>
+         <div className="responsive-nav-actions">
             <BlastWAModal tamuList={tamuList || []} undangan={undangan} />
             <ImportTamuExcel undanganId={id} />
             <Link href={`/dashboard/${id}/tamu/tambah`} style={{
               background: '#0f172a', color: '#fff', padding: '8px 16px', borderRadius: '8px',
-              textDecoration: 'none', fontSize: '14px', fontWeight: 600
+              textDecoration: 'none', fontSize: '14px', fontWeight: 600, whiteSpace: 'nowrap'
             }}>+ Tambah Tamu</Link>
          </div>
       </nav>
 
       <div style={{ maxWidth: '1200px', margin: '40px auto', padding: '0 24px' }}>
-        <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0', overflow: 'hidden' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+        <div className="table-container">
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
               <thead>
                 <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
                   <th style={{ ...tdStyle, fontWeight: 600, color: '#0f172a' }}>Nama Tamu</th>

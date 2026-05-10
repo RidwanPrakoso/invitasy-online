@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Swal from 'sweetalert2'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   undanganId: string
@@ -13,6 +14,7 @@ export default function GuestbookForm({ undanganId, accentColor }: Props) {
   const [ucapan, setUcapan] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -28,13 +30,14 @@ export default function GuestbookForm({ undanganId, accentColor }: Props) {
       if (res.ok) {
         setNama('')
         setUcapan('')
+        setSuccess(true)
         Swal.fire({
           icon: 'success',
           title: 'Ucapan Terkirim!',
           text: 'Terima kasih atas doa dan ucapannya.',
           confirmButtonColor: accentColor
         }).then(() => {
-          window.location.reload(); // Refresh to show new comment
+          router.refresh(); // Refresh to show new comment without resetting state
         })
       } else {
         Swal.fire({
